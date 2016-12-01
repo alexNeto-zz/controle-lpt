@@ -62,8 +62,14 @@ void recebeVariaveis(){
 	for(i = 0; i < quantPassos; i++){
 		passos[i] = 0;
 	}
-
-	//int tempo = 0; // Variavel para receber o tempo entre cada passo
+	/*** Loop para armazenar cada passo ***/
+	for(i = 0; i < quantPassos; i++){
+			printf("Digite o %dº passo: ");
+			scanf("%d", &passos[i]);
+	}
+	int atraso = 0; // Variavel para receber o tempo entre cada passo
+	printf("Digite o intervalo entre cada passo (em ms, e apenas inteiros): ");
+	scanf("%d", &atraso);
 
 }
 void atraso(int atraso){
