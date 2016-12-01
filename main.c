@@ -62,8 +62,8 @@ void recebeVariaveis(){
 	for(i = 0; i < quantPassos; i++){
 		passos[i] = 0;
 	}
-	
-	int tempo = 0; // Variavel para receber o tempo entre cada passo
+
+	//int tempo = 0; // Variavel para receber o tempo entre cada passo
 
 }
 void atraso(int atraso){
