@@ -3,41 +3,50 @@
 #include <time.h>
 
 void bemVindo(); 	// prototipo da funcao de boas vindas
+void menuPrincipal();
 void recebeVariaveis(); // prototipo da funcao input sequencia
 void sequencia(int quantPassos, int passos[], int atraso);	// prototipo da funcao de sequencia
 void ajuda();		// prototipo da funcao de ajuda
 void atrasoFuc(int atraso); // prototipo da funcao atraso
+
+
 int main(){
 
 	bemVindo();
 	short escolha = 0;
-	scanf("%d", &escolha);
-	switch(escolha){
-		case 1:
-			recebeVariaveis();
-			break;
-		case 2:
-			ajuda();
-			break;
-		case 3:
-			system("exit");
-		default:
-			// TODO
-			break;
+	while(1){
+		menuPrincipal();
+		scanf("%d", &escolha);
+		switch(escolha){
+			case 1:
+				recebeVariaveis();
+				break;
+				case 2:
+				ajuda();
+				break;
+				case 3:
+				system("exit");
+				default:
+				// TODO
+				break;
+		}
 	}
 	return 0;
 }
 
-/** Funcao de boas vindas e exibicao do menu principal **/
+/** Funcao de boas vindas **/
 void bemVindo(){
 	system("title CONTROLE PORTA PARALELA"); // Muda o titulo da janela
 	system("cls"); // limpa a janela
 	printf("Bem-vindo ao controle de porta paralela\n"); // Mensagem de boas vindas
+}
+/** funcao de exibicao do menu principal **/
+void menuPrincipal(){
 	printf("escolha\t\tfuncao\n\n"); // Cabecalho do menu Inicial
 	/*** Itens do menu ***/
 	printf("1\t\tIniciar sequencia\n");
 	printf("2\t\tAjuda\n");
-	printf("3\t\tSair");
+	printf("3\t\tSair\n");
 }
 /** Funcao para exibir ajuda **/
 void ajuda(){
@@ -71,6 +80,7 @@ void recebeVariaveis(){
 	scanf("%d", &atraso);
 	sequencia(quantPassos, passos, atraso);
 }
+/** funcao que faz sequencia **/
 void sequencia(int quantPassos, int passos[], int atraso){
 	int i;
 	for(i = 0; i < quantPassos; i++){
@@ -79,6 +89,7 @@ void sequencia(int quantPassos, int passos[], int atraso){
 	}
 
 }
+/** funcao de atraso **/
 void atrasoFuc(int atraso){
 	int x; // Define o contador
 	clock_t Ini;  //Criacao da variavel relogio
