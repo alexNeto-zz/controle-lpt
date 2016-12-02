@@ -69,6 +69,7 @@ void recebeVariaveis(){
 	int atraso = 0; // Variavel para receber o tempo entre cada passo
 	printf("Digite o intervalo entre cada passo (em ms, e apenas inteiros): ");
 	scanf("%d", &atraso);
+	sequencia(quantPassos, passos, atraso);
 }
 void sequencia(int quantPassos, int passos[], int atraso){
 	int i;
