@@ -4,10 +4,10 @@
 
 void bemVindo(); 	// prototipo da funcao de boas vindas
 void recebeVariaveis(); // prototipo da funcao input sequencia
-void sequencia();	// prototipo da funcao de sequencia
+void sequencia(int quantPassos, int passos[], int atraso);	// prototipo da funcao de sequencia
 void ajuda();		// prototipo da funcao de ajuda
+void atrasoFuc(int atraso); // prototipo da funcao atraso
 int main(){
-
 
 	bemVindo();
 	short escolha = 0;
@@ -25,7 +25,6 @@ int main(){
 			// TODO
 			break;
 	}
-
 	return 0;
 }
 
@@ -71,19 +70,20 @@ void recebeVariaveis(){
 	printf("Digite o intervalo entre cada passo (em ms, e apenas inteiros): ");
 	scanf("%d", &atraso);
 }
-void sequencia(int quantPassos, int passos, int atraso){
+void sequencia(int quantPassos, int passos[], int atraso){
 	int i;
 	for(i = 0; i < quantPassos; i++){
 			printf("%d\n", passos[i]);
-			atraso(atraso);
+			atrasoFuc(atraso);
 	}
 
 }
-void atraso(int atraso){
-	int x;
+void atrasoFuc(int atraso){
+	int x; // Define o contador
 	clock_t Ini;  //Criacao da variavel relogio
 	Ini = clock(); //Inicializacao do relogio
-	while(((clock() - Ini) / (CLOCKS_PER_SEC / 100)) <= atraso){  //Executa o while por 10ms antes de retornar o valor
+	 //Executa o while por 10ms antes de retornar o valor
+	while(((clock() - Ini) / (CLOCKS_PER_SEC / 100)) <= atraso){
 			x++;
 	}
 }
