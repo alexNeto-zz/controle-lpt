@@ -1,17 +1,18 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
+#include <windows.h>
 
 void bemVindo(); 	// prototipo da funcao de boas vindas
 void menuPrincipal();
 void recebeVariaveis(); // prototipo da funcao input sequencia
 void sequencia(int quantPassos, int passos[], int atraso, int repeticao);	// prototipo da funcao de sequencia
 void atrasoFuc(int atraso); // prototipo da funcao atraso
-
+int carregaLib();
 
 int main(){
-
 	bemVindo();
+	if(carregaLib() == -1) return -1;
 	short escolha = 0;
 	while(1){
 		system("cls");
@@ -36,6 +37,43 @@ void bemVindo(){
 		atrasoFuc(5);
 	}
 	system("cls");
+}
+int carregaLib(){
+	typedef short _stdcall (*PtrInp)(short EndPorta);
+	typedef void _stdcall (*PtrOut)(short EndPorta, short valor);
+	HINSTANCE hLib; //Instância para a DLL inpout32.dll.
+   	PtrInp inportb;     //Instância para a função Imp32(). 
+   	PtrOut outportb;  //Instância para a função Out32().
+
+   //Carrega a DLL na memória.
+   hLib = LoadLibrary("inpout32.dll");
+
+   if(hLib == NULL) //Verifica se houve erro.
+   {
+      printf("Erro. O arquivo inpout32.dll não foi encontrado.\n");
+      getch();
+      return -1;
+   }
+
+   //Obtém o endereço da função Inp32 contida na DLL.
+   inportb = (PtrInp) GetProcAddress(hLib, "Inp32");
+
+   if(inportb == NULL) //Verifica se houve erro.
+   {
+      printf("Erro. A função Inp32 não foi encontrada.\n");
+      getch();
+      return -1;
+   }
+
+   //Obtém o endereço da função Out32 contida na DLL.
+   outportb = (PtrOut) GetProcAddress(hLib, "Out32");
+
+   if(outportb == NULL) //Verifica se houve erro.
+   {
+       printf("Erro. A função Out32 não foi encontrada.\n");
+       getch();
+       return -1;
+   }
 }
 /** funcao de exibicao do menu principal **/
 void menuPrincipal(){
@@ -74,7 +112,7 @@ void sequencia(int quantPassos, int passos[], int atraso, int repeticao){
 	int i, j;
 	for(i = 0; i < repeticao; i++)
 		for(j = 0; j < quantPassos; j++){
-			printf("%d\n", passos[j]);
+			outportb(0x378, passos[j]);
 			atrasoFuc(atraso);
 		}
 }
