@@ -14,31 +14,33 @@ int main(){
 
 	bemVindo();
 	short escolha = 0;
-	while(1){
+
 		menuPrincipal();
 		scanf("%d", &escolha);
 		switch(escolha){
 			case 1:
 				recebeVariaveis();
 				break;
-				case 2:
+			case 2:
 				ajuda();
 				break;
-				case 3:
+			case 3:
 				system("exit");
-				default:
+				break;
+			default:
 				// TODO
 				break;
 		}
-	}
+	
 	return 0;
 }
 
 /** Funcao de boas vindas **/
 void bemVindo(){
 	system("title CONTROLE PORTA PARALELA"); // Muda o titulo da janela
-	system("cls"); // limpa a janela
 	printf("Bem-vindo ao controle de porta paralela\n"); // Mensagem de boas vindas
+	atrasoFuc(500);
+	system("cls");
 }
 /** funcao de exibicao do menu principal **/
 void menuPrincipal(){
@@ -57,7 +59,6 @@ void ajuda(){
  no campo 'TODO' digite quantas vezes a sequencia se repetira\n\
  no campo 'TODO' digite intervalo entre cada passo\n");
 	printf("E pronto, voce criou uma sequencia!");
-	system("cls");
 }
 /** Funcao para definir a sequencia de LEDs acesos **/
 void recebeVariaveis(){
@@ -72,7 +73,7 @@ void recebeVariaveis(){
 	}
 	/*** Loop para armazenar cada passo ***/
 	for(i = 0; i < quantPassos; i++){
-			printf("Digite o %dÂº passo: ");
+			printf("Digite o %dº passo: ", i);
 			scanf("%d", &passos[i]);
 	}
 	int atraso = 0; // Variavel para receber o tempo entre cada passo
