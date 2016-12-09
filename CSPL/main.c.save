@@ -1,8 +1,13 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <time.h>
-//#include <windows.h>
 /*
+* Bibliotecas necessárias
+*/
+#include <stdio.h>      // printf() e scanf()
+#include <stdlib.h>     // system()
+#include <time.h>       // Usar o relogio
+#include <windows.h>    // Importar o inpout32.dll
+/*
+* 
+*/
 typedef short _stdcall (*PtrInp)(short EndPorta);
 typedef void _stdcall (*PtrOut)(short EndPorta, short valor);
 
@@ -10,7 +15,7 @@ HINSTANCE hLib;     //Instância para a DLL inpout32.dll.
 PtrInp inportb;     //Instância para a função Imp32().
 PtrOut outportb;    //Instância para a função Out32().
 
-*/
+
 void bemVindo(); 	               // prototipo da funcao de boas vindas
 void menuPrincipal();
 void recebeVariaveis();            // prototipo da funcao input sequencia
@@ -57,9 +62,9 @@ void bemVindo(){
 int carregaLib(){
 
    //Carrega a DLL na memória.
-//   hLib = LoadLibrary("inpout32.dll");
+   hLib = LoadLibrary("inpout32.dll");
 
-//   if(hLib == NULL) //Verifica se houve erro.
+   if(hLib == NULL) //Verifica se houve erro.
    {
       printf("Erro. O arquivo inpout32.dll não foi encontrado.\n");
       getch();
@@ -67,9 +72,9 @@ int carregaLib(){
    }
 
    //Obtém o endereço da função Inp32 contida na DLL.
-//   inportb = (PtrInp) GetProcAddress(hLib, "Inp32");
+   inportb = (PtrInp) GetProcAddress(hLib, "Inp32");
 
-//   if(inportb == NULL) //Verifica se houve erro.
+   if(inportb == NULL) //Verifica se houve erro.
    {
       printf("Erro. A função Inp32 não foi encontrada.\n");
       getch();
@@ -77,9 +82,9 @@ int carregaLib(){
    }
 
    //Obtém o endereço da função Out32 contida na DLL.
-//   outportb = (PtrOut) GetProcAddress(hLib, "Out32");
+   outportb = (PtrOut) GetProcAddress(hLib, "Out32");
 
-//   if(outportb == NULL) //Verifica se houve erro.
+   if(outportb == NULL) //Verifica se houve erro.
    {
        printf("Erro. A função Out32 não foi encontrada.\n");
        getch();
