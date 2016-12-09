@@ -139,7 +139,7 @@ void recebeVariaveis(int binario){ // o parametro int binario sera usado para ve
 		passos[i] = 0;
 	}
 	/*** Loop para armazenar cada passo ***/
-	if(binario == 0)
+	if(binario == 0) // verifica parametro binario
 		for(i = 0; i < quantPassos; i++){
 			do{
 			printf("Digite o %d passo (menor  que 255): ", i + 1);
@@ -151,7 +151,9 @@ void recebeVariaveis(int binario){ // o parametro int binario sera usado para ve
 			printf("Digite o %d passo (8 bits): ", i);
 			int valorBinario;
 			scanf("%d", &valorBinario);
-			passos[i] = converteParaDecimal(valorBinario);
+			// chama a funcao quem converte de binario para decimal
+			// e amarzena na lista passos, na posicao i
+			passos[i] = converteParaDecimal(valorBinario); 
 		}
 	int atraso = 0; // Variavel para receber o tempo entre cada passo
 	printf("Digite o intervalo entre cada passo (em ms, e apenas inteiros): ");
@@ -161,29 +163,39 @@ void recebeVariaveis(int binario){ // o parametro int binario sera usado para ve
 	scanf("%d", &repeticao);
 	sequencia(quantPassos, passos, atraso, repeticao);
 }
-// ** funcao que converte de binario para decimal **/
+/** funcao que converte de binario para decimal **/
 int converteParaDecimal(int valorBinario){
 	int valorDecimal = 0;
 	int potencia = 1;
+	// representacao em codigo da formula
+	// (D * 2 ^ P) + (D * 2 ^ P-1) + ... + (D * 2 ^ P-n)
 	while(valorBinario > 0){
 		valorDecimal += valorBinario % 10 * potencia;
 		valorBinario /= 10;
 		potencia *= 2;
 	}
+	// retorna o valor convertido
 	return valorDecimal;
 }
 /** funcao que faz sequencia **/
 void sequencia(int quantPassos, int passos[], int atraso, int repeticao){
+	// variaveis para contador
 	int i, j;
+	// limpa todo conteudo da janela
 	system("cls");
+	// for para a quantidade de vezes que se deseja
+	// repetir a sequencia
 	for(i = 0; i < repeticao; i++){
 		printf("Sequencia em progresso");
+		// loop para percorrer a lista passos
+		// e ligar os LEDs de acordo com o valor
+		// de cada posicao
 		for(j = 0; j < quantPassos; j++){
-			if(j % 3 == 0) printf(".");
-			outportb(0x378, passos[j]);
-			atrasoFuc(atraso);
+			if(j % 3 == 0) printf("."); // so para mostrar algun status no console
+			outportb(0x378, passos[j]); // imprime na porta LPT
+			atrasoFuc(atraso);          // chama a funcao atrado com o atraso digitado
 		}
-		system("cls");
+		system("cls"); //  apaga todo o conteudo da janelas
 	}
 }
 /** funcao de atraso **/
