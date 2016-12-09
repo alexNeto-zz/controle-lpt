@@ -1,23 +1,21 @@
-/*
-* Bibliotecas necessárias
-*/
+/** Bibliotecas necessárias **/
 #include <stdio.h>      // printf() e scanf()
 #include <stdlib.h>     // system()
 #include <time.h>       // Usar o relogio
 #include <windows.h>    // Importar o inpout32.dll
-/*
-* 
-*/
-typedef short _stdcall (*PtrInp)(short EndPorta);
-typedef void _stdcall (*PtrOut)(short EndPorta, short valor);
+/** Configuração da porta paralela **/
+// Cria um "tipo de váriavel" chamada PtrInp
+typedef short _stdcall (*PtrInp)(short EndPorta); // Para entrada de dados via LPT              
+// Cria um "tipo de váriavel" chamada PtrOut
+typedef void _stdcall (*PtrOut)(short EndPorta, short valor); // Para saida de dados via LPT
 
 HINSTANCE hLib;     //Instância para a DLL inpout32.dll.
 PtrInp inportb;     //Instância para a função Imp32().
 PtrOut outportb;    //Instância para a função Out32().
 
-
+/** Protótipos das funções **/
 void bemVindo(); 	               // prototipo da funcao de boas vindas
-void menuPrincipal();
+void menuPrincipal();              // Prototipo da funcao de menu inicial
 void recebeVariaveis();            // prototipo da funcao input sequencia
 void sequencia(int quantPassos,
                int passos[],
@@ -25,19 +23,43 @@ void sequencia(int quantPassos,
                int repeticao);	   // prototipo da funcao de sequencia
 void atrasoFuc(int atraso);        // prototipo da funcao atraso
 int carregaLib();
-
+/** E aqui que o programa comeca a executar **/
 int main(){
-	bemVindo();
+    // chama a funcao de boas-vindas
+	bemVindo();                     
+	// chama a funcao que vai carregas o inpout32.dll
+	// caso de algum erro, a funcao retornara -1
+	// se tudo der certo retornara 0
 	if(carregaLib() == -1) return -1;
+	// declara uma variavel do tipo short
+	// (short é um inteiro pequeno)
+	// escolha sera usada para armazenar 
+	// o item do menu seleciuonado pelo usuario
 	short escolha = 0;
+	// loop para repetir o codigo emquanto necessario
 	while(1){
+        // apaga todos os LEDs da porta paralela
 		outportb(0x378, 0);
+		// apaga todo conteudo da janela
 		system("cls");
+		// chama a funcao menuPrincipal
 		menuPrincipal();
+		// armazena o valor digitado na variavel escolha
 		scanf("%d", &escolha);
+		// caso o primeiro item seja celecionado
+		// sera chamada a funcao recebeVariaveis
+		// com o parametro 0
 		if(escolha == 1) recebeVariaveis(0);
+		// se o segundo item for selecionado 
+		// o parametro sera 1
 		else if(escolha == 2) recebeVariaveis(1);
+		// caso a terceira opcao seja escolhida
+		// saira do looping e executara a linha
+		// system("exit"); que fechara a janela
 		else if(escolha == 3) break;
+		// se for escolhido qualquer outra coisa
+		// aparecera a mensagem abaixo, que ficara 
+		// visivel por 50 ms
 		else{
 			printf("Escolha invalida");
 			atrasoFuc(50);
@@ -52,10 +74,14 @@ void bemVindo(){
 	system("title CONTROLE PORTA PARALELA"); // Muda o titulo da janela
 	printf("Bem-vindo ao controle de porta paralela\n"); // Mensagem de boas vindas
 	int i;
+	// loop para aparecer uma barra de carregando
+	// formada por iguais 
+	// ==========================================
 	for(i = 0; i < 39; i++){
 		printf("=");
 		atrasoFuc(5);
 	}
+	// limpa todo o conteudo da janela
 	system("cls");
 }
 /** funcao que carrega input32.dll **/
@@ -100,8 +126,9 @@ void menuPrincipal(){
 	printf("3\t\tSair\n");
 }
 /** Funcao para definir a sequencia de LEDs acesos **/
-void recebeVariaveis(int binario){
-	system("cls");
+void recebeVariaveis(int binario){ // o parametro int binario sera usado para verificar se 
+                                   // precisa de convercao ou nao
+	system("cls");  // limpa todo conteudo da janela
 	int quantPassos = 0; // Variavel que ira receber a quantidade de passos
 	printf("Digite a quantidade de passos: "); // Mensagem com informacao para usuario
 	scanf("%d", &quantPassos); // Recebe o valor digitado, sem tratamento
