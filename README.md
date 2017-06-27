@@ -1,5 +1,6 @@
 # controle-lpt
 
+
 Para maiores etalhes consulte a wiki do projeto:
 [wiki CSPL](https://github.com/alexNeto/controle-lpt/wiki)
 
